@@ -1,0 +1,27 @@
+<div class="cContainer">
+    <sf-user-auth id="sf_auth" appName="Superflows" apiId="[AUTH_API_ID]" logo="https://superflows-images.s3.ap-south-1.amazonaws.com/superflows_black_transparent_200.png">
+        <div slot="privacy">
+            <h1>Privacy</h1>
+            <p>Privacy policy goes here
+        </div>
+        <div slot="terms">
+            <h1>Terms</h1>
+            <p>Terms & Conditions go here
+        </div>
+    </sf-user-auth>
+</div>
+<script>
+
+    var accessToken;
+
+    document.querySelector('#sf_auth').onArgs = getCurrentArgs;
+    document.getElementsByTagName('sf-user-auth')[0].addEventListener('accessTokenReceived', (e) => {
+        accessToken = e.detail.accessToken.token;
+        insertSignInSfNavMenu();
+        //console.log('setting hash');
+
+    })
+    document.getElementsByTagName('sf-user-auth')[0].addEventListener('signedOut', (e) => {
+        insertSignOutSfNavMenu();
+    })
+</script>
