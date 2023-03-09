@@ -16,12 +16,20 @@
 
     document.querySelector('#sf_auth').onArgs = getCurrentArgs;
     document.getElementsByTagName('sf-user-auth')[0].addEventListener('accessTokenReceived', (e) => {
+        console.log('access token received ', e.detail);
         accessToken = e.detail.accessToken.token;
-        insertSignInSfNavMenu();
+        if(e.detail.admin) {
+            insertSignInSfNavMenuForAdmin();
+        } else {
+            insertSignInSfNavMenu();
+        }
+        
         //console.log('setting hash');
 
     })
     document.getElementsByTagName('sf-user-auth')[0].addEventListener('signedOut', (e) => {
+        console.log('received signout');
         insertSignOutSfNavMenu();
     })
+
 </script>
