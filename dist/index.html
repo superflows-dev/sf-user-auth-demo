@@ -53,9 +53,7 @@
           <div slot="content">
           </div>
   
-          <!-- Call to action -->
-          <a slot="cta" href="#auth/signin">Sign In</a>
-  
+          
           <!-- Copyright notice -->
           <p slot="copyright">Copyright 2022 Superflows</p>
   
@@ -80,6 +78,7 @@
 
         // Menu HTML to be inserted into sf-nav
         const menu = `
+
             <!-- Set the main menu -->
             <ul slot="mainMenu">
                 <li><a href="#about">About</a></li>
@@ -101,8 +100,14 @@
             </ul>
         `;
         
+        const ctaMenu = `
+            <!-- Call to action -->
+            <a slot="cta" href="#auth/signin">Sign In</a>
+        `;
+
         // Profile menu HTML to be inserted into sf-nav
         const profileMenu = `
+
             <ul id="profile-menu" slot="profileMenu">
                 <li>
                     <a href="#auth/signout">Sign Out</a>
@@ -155,7 +160,7 @@
         // Initiate the menu (first load)
         function insertSfNavMenu() {
             const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-            const newInnerHTML = currentInnerHTML + menu;
+            const newInnerHTML = currentInnerHTML + menu + ctaMenu;
             document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
             initiateListeners();
             
@@ -201,7 +206,7 @@
                 if(document.getElementById('profile-img') != null) {
                     document.getElementById('profile-img').outerHTML = '';
                     const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-                    const newInnerHTML = currentInnerHTML + menu;
+                    const newInnerHTML = currentInnerHTML + menu + ctaMenu;
                     document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
                     initiateListeners();
                 }
