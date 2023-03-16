@@ -42,6 +42,7 @@
   </head>
   <body style="margin: 0px;">
     <div id="nav-container">
+        <!-- This is the navigation component, which transforms this simple HTML / CSS / Javascript app into a single-page application -->
         <sf-nav id="sf-nav">
             <!-- Set the brand name -->
           <h2 slot="brandName"><a href="#home" >Superflows</a></h2>
@@ -73,10 +74,10 @@
         // Navigation bar related Javascript
         //
 
-        // Hash map for storing paths & arguments
+        // Hash map for storing paths & arguments, it is needed for routing
         var routeMap = [];
 
-        // Menu HTML to be inserted into sf-nav
+        // The main menu HTML to be inserted into sf-nav
         const menu = `
 
             <!-- Set the main menu -->
@@ -100,12 +101,13 @@
             </ul>
         `;
         
+        // The call-to-action to be inserted into sf-nav
         const ctaMenu = `
             <!-- Call to action -->
             <a slot="cta" href="#auth/signin">Sign In</a>
         `;
 
-        // Profile menu HTML to be inserted into sf-nav
+        // The profile-menu to be inserted into sf-nav
         const profileMenu = `
 
             <ul id="profile-menu" slot="profileMenu">
@@ -115,7 +117,7 @@
             </ul>
         `;
 
-        // Profile menu HTML to be inserted into sf-nav
+        // Profile menu to be inserted into sf-nav, in case the signed in user is an administrator
         const profileMenuAdmin = `
             <ul id="profile-menu" slot="profileMenu">
                 <li>
