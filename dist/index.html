@@ -1,231 +1,117 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>&lt;sf-nav&gt; Demo</title>
-    <!-- Integration material icons as they are used in sf-nav -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <!-- Google fonts integration -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
-    <!-- Integration the web components module -->
-    <script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"></script>
-    <!-- Integration lit and sf-nav web components module -->
-    <script type="module">
-        import {LitElement, html, css} from 'https://unpkg.com/lit-element/lit-element.js?module';
-        import {SfNav} from 'https://unpkg.com/sf-nav/sf-nav.js?module';
-        import {SfUserAuth} from 'https://unpkg.com/sf-user-auth/sf-user-auth.js?module';
-    </script>
-    <style>
-      
-      body {
-        background-color: #efefef;
-        margin: 0px;
-        font-family: 'Source Sans Pro';
-      }
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>&lt;sf-nav&gt; Demo</title>
+        <!-- Integration material icons as they are used in sf-nav -->
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- Google fonts integration -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@200;300;400;600&display=swap" rel="stylesheet">
+        <!-- Add all the custom styling in this css file -->
+        <link rel="stylesheet" href="styles.css">
+        <!-- Integration the web components module -->
+        <script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"></script>
+        <!-- Integration lit and sf-nav web components module -->
+        <script src="./util.js"></script>
+        <script type="module">
+            import {LitElement, html, css} from 'https://unpkg.com/lit-element/lit-element.js?module';
+            import {SfUserAuth} from 'https://unpkg.com/sf-user-auth/sf-user-auth.js?module';
+        </script>
+        <style>
+            sf-nav:not(:defined) {
+            display: none;
+            }
+        </style>
+    </head>
 
-      sf-nav:not(:defined) {
-        display: none;
-      }
+    <body>
 
-      .cContainer {
-            margin: 10px;
-            padding: 20px;
-            border: dashed 1px gray;
-            background-color: white;
-        }
-      
-    </style>
-  </head>
-  <body style="margin: 0px;">
-    <div id="nav-container">
-        <!-- This is the navigation component, which transforms this simple HTML / CSS / Javascript app into a single-page application -->
-        <sf-nav id="sf-nav">
-            <!-- Set the brand name -->
-          <h2 slot="brandName"><a href="#home" >Superflows</a></h2>
-          <!-- Set the brand logo -->
-          <a slot="brandImage" href="#home" ><img alt="logo" src="https://superflows-images.s3.ap-south-1.amazonaws.com/superflows_black_transparent_200.png" /></a>
-          
-  
-          <!-- Page Content -->
-          <div slot="content">
-          </div>
-  
-          
-          <!-- Copyright notice -->
-          <p slot="copyright">Copyright 2022 Superflows</p>
-  
-          <!-- Set the social media links -->
-          <ul slot="socialMedia">
-              <li><a href="https://facebook.com"><img src="https://superflows-images.s3.ap-south-1.amazonaws.com/facebook-black_round.png" /></a></li>
-              <li><a href="https://twitter.com"><img src="https://superflows-images.s3.ap-south-1.amazonaws.com/twitter_black_round.png" /></a></li>
-              <li><a href="https://youtube.com"><img src="https://superflows-images.s3.ap-south-1.amazonaws.com/youtube_black_round.png" /></a></li>
-          </ul>
-    
-        </sf-nav>
-    </div>
+        <br /><br />
+        <div class="logo-container">
+            <a href="index.html"><img src="https://superflows-images.s3.ap-south-1.amazonaws.com/superflows_black_transparent_200.png" /></a>
+        </div>
+        <div class="logo-container">
+            <h1>Sample Code For Project ABC</h1>
+        </div>
 
-    <script>
+        <div class="ui-container user">
+            <div><h4>You are signed in as</h4></div>
+            <div><h2 class="user-email"></h2></div>
+            <br />
+            <button onclick="signOut()">Sign Out</button>
+            <br />
+            <br />
+        </div>
 
-        //
-        // Navigation bar related Javascript
-        //
+        <div class="ui-container admin">
+            <div><h4>You are signed in as</h4></div>
+            <div><h2 class="admin-email"></h2></div>
+            <br />
+            <button onclick="signOut()">Sign Out</button>
+            <br />
+            <div><a href="auth.html#auth/admin"><h3>Admin Console</h3></a></div>
+            <br />
+            <br />
+        </div>
 
-        // Hash map for storing paths & arguments, it is needed for routing
-        var routeMap = [];
+        <div class="ui-container auth">
+            <div><h4>You are not signed in</h4></div>
+            <button onclick="signIn()">Sign In</button>
+        </div>
 
-        // The main menu HTML to be inserted into sf-nav
-        const menu = `
+        <script>
 
-            <!-- Set the main menu -->
-            <ul slot="mainMenu">
-                <li><a href="#about">About</a></li>
-                <li class="li-solutions">
-                    <a href="javascript:void(0);" class="a-solutions">Solutions</a>
-                    <ul>
-                        <li><a href="#services">Services</a></li>
-                        <li><a href="#products">Products</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="javascript:void(0);">Contact Us</a>
-                    <ul>
-                        <li><a href="https://instagram.com">Instagram</a></li>
-                        <li><a href="https://facebook.com">Facebook</a></li>
-                        <li><a href="https://youtube.com">YouTube</a></li>
-                    </ul>
-                </li>
-            </ul>
-        `;
-        
-        // The call-to-action to be inserted into sf-nav
-        const ctaMenu = `
-            <!-- Call to action -->
-            <a slot="cta" href="#auth/signin">Sign In</a>
-        `;
+            function signOut() {
+                window.location.href = 'auth.html#auth/signout';
+            }
 
-        // The profile-menu to be inserted into sf-nav
-        const profileMenu = `
+            function signIn() {
+                window.location.href = 'auth.html#auth/signin';
+            }
 
-            <ul id="profile-menu" slot="profileMenu">
-                <li>
-                    <a href="#auth/signout">Sign Out</a>
-                </li>
-            </ul>
-        `;
+            function init() {
 
-        // Profile menu to be inserted into sf-nav, in case the signed in user is an administrator
-        const profileMenuAdmin = `
-            <ul id="profile-menu" slot="profileMenu">
-                <li>
-                    <a href="javascript:void(0);">Admin</a>
-                    <ul>
-                        <li><a href="#auth/admin">Authentication</a></li>
-                    </ul>
-                </li>
-                <li>
-                    <a href="#auth/signout">Sign Out</a>
-                </li>
-            </ul>
-        `;
+                const email = readCookie('email');
+                const admin = readCookie('admin');
 
-        // Profile image HTML to be inserted into sf-nav
-        const profileImg = `
-            <img id="profile-img" alt="profile" slot="profilePicture" src="https://superflows-images.s3.ap-south-1.amazonaws.com/user.png" />
-        `;
+                console.log(email);
+                
+                if(email == null || email.length == 0) {
+                    
+                    document.querySelector('.auth').style.display = 'flex';
+                    document.querySelector('.user').style.display = 'none';
+                    document.querySelector('.admin').style.display = 'none';
+                
+                } else {
 
-        // What's the current path?
-        function getCurrentPathName() {
-            return window.location.hash.length === 0 ? '' : window.location.hash.split("/")[0].replace('#', '');
-        }
+                    if(admin) {
 
-        // What are the current arguments?
-        function getCurrentArgs() {
-            return routeMap[getCurrentPathName() + '.html'];
-        }
+                    document.querySelector('.admin-email').innerHTML = email;
+                    document.querySelector('.auth').style.display = 'none';
+                    document.querySelector('.user').style.display = 'none';
+                    document.querySelector('.admin').style.display = 'flex';
 
-        // Initiate navigation bar listeners
-        function initiateListeners() {
-            document.getElementsByTagName('sf-nav')[0].addEventListener('searchClick', (e) => {console.log('hurray ' + JSON.stringify(e.detail));})
-            document.getElementsByTagName('sf-nav')[0].addEventListener('routeChange', (e) => {
-                routeMap[e.detail.pathName] = e.detail.args;
-            })
-        }
-        
-        // 
-        // Handling the authentication
-        // 
+                    } else {
 
-        // Initiate the menu (first load)
-        function insertSfNavMenu() {
-            const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-            const newInnerHTML = currentInnerHTML + menu + ctaMenu;
-            document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
-            initiateListeners();
-            
-        }
+                    document.querySelector('.user-email').innerHTML = email;
+                    document.querySelector('.auth').style.display = 'none';
+                    document.querySelector('.user').style.display = 'flex';
+                    document.querySelector('.admin').style.display = 'none';
 
-        // Update the navigation bar after sign in successful
-        function insertSignInSfNavMenu() {
+                    }
 
-            window.location.hash='#home';
-            
-            setTimeout(() => {
-                const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-                console.log(currentInnerHTML);
-                const newInnerHTML = currentInnerHTML + (currentInnerHTML.indexOf('profilePicture') < 0 ? profileImg : "") + menu + profileMenu;
-                document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
-                initiateListeners();    
-            }, 500);
-            
-        }
-
-        // Update the navigation bar after sign in successful
-        function insertSignInSfNavMenuForAdmin() {
-
-            window.location.hash='#home';
-
-            setTimeout(() => {
-                const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-                console.log(currentInnerHTML);
-                const newInnerHTML = currentInnerHTML + (currentInnerHTML.indexOf('profilePicture') < 0 ? profileImg : "") + menu + profileMenuAdmin;
-                document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
-                initiateListeners();    
-            }, 500);
+                }
 
             }
 
-        // Update the navigation bar after sign out successful
-        function insertSignOutSfNavMenu() {
+            init();
 
-            window.location.hash='#home';
+        </script>
 
-            setTimeout(() => {
-
-                if(document.getElementById('profile-img') != null) {
-                    document.getElementById('profile-img').outerHTML = '';
-                    const currentInnerHTML = document.getElementsByTagName('sf-nav')[0].innerHTML;
-                    const newInnerHTML = currentInnerHTML + menu + ctaMenu;
-                    document.getElementById('nav-container').innerHTML = '<sf-nav>'  + newInnerHTML + '</sf-nav>';
-                    initiateListeners();
-                }
-
-            }, 500);
-
-        }
-       
-        function initPage() {
-
-            insertSfNavMenu();
-            window.location.hash = '#auth/refresh';
-
-        }
-
-        initPage();
-
-    </script>
-  </body>
+    </body>
+  
 </html>
