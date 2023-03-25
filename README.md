@@ -18,7 +18,7 @@ The code consists of the following files:
 - This file integrates the authentication supermod
 - It handles the sign in and sign out events as well
 
-### styles.html
+### styles.css
 - Custom css styles are specified in this css stylesheet
 
 ### util.js

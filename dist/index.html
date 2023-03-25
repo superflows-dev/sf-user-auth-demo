@@ -14,18 +14,12 @@
         <!-- Add all the custom styling in this css file -->
         <link rel="stylesheet" href="styles.css">
         <!-- Integration the web components module -->
-        <script src="https://unpkg.com/@webcomponents/webcomponentsjs@latest/webcomponents-loader.js"></script>
         <!-- Integration lit and sf-nav web components module -->
         <script src="./util.js"></script>
         <script type="module">
             import {LitElement, html, css} from 'https://unpkg.com/lit-element/lit-element.js?module';
             import {SfUserAuth} from 'https://unpkg.com/sf-user-auth/sf-user-auth.js?module';
         </script>
-        <style>
-            sf-nav:not(:defined) {
-            display: none;
-            }
-        </style>
     </head>
 
     <body>
@@ -85,7 +79,7 @@
                 <li>It handles the sign in and sign out events as well</li>
             </ul> 
     
-            <h3>styles.html</h3>
+            <h3>styles.css</h3>
             <ul>
                 <li>Custom css styles are specified in this css stylesheet</li>
             </ul> 
